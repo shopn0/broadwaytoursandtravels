@@ -47,28 +47,33 @@
 ## 🔄 System Flowchart & Data Architecture
 
 ```mermaid
-flowchart TD
-    subgraph Client["🖥️ React Frontend (Vite + Firebase Hosting)"]
-        UI["User Interface (Dashboard / Invoices / Bills / Pilgrims)"]
-        PrayerEngine["🕌 Dhaka Astronomical Prayer Engine"]
-        PDFEngine["📄 Client-side PDF Generator (jspdf/html2canvas)"]
+graph TD
+    %% Nodes inside Frontend
+    subgraph Client ["Frontend: React & Vite"]
+        UI["Web Interface Dashboard"]
+        PrayerEngine["Dhaka Solar Calculation Engine"]
+        PDFEngine["Client-Side PDF Generator"]
     end
 
-    subgraph Firebase["🔥 Google Firebase Services"]
-        Auth["Firebase Authentication (Admin RBAC)"]
-        Firestore["Cloud Firestore (Invoices, Events, Status Records)"]
+    %% Nodes inside Firebase
+    subgraph Firebase ["Firebase Cloud Platform"]
+        Auth["Firebase Authentication"]
+        Firestore[("Cloud Firestore DB")]
     end
 
-    subgraph GoogleCloud["📊 Google Workspace Layer"]
-        GAS["Google Apps Script (REST Webhook / JSON API)"]
-        GSheet[("Google Sheets Central Ledger (Broadway-27)")]
+    %% Nodes inside Google Workspace
+    subgraph GoogleSuite ["Google Workspace Integration"]
+        GAS["Google Apps Script API"]
+        GSheet[("Broadway-27 Master Google Sheet")]
     end
 
+    %% Connections
     UI --> Auth
-    UI <-->|Real-time Snapshot Sync| Firestore
-    UI -->|Print / Save PDF| PDFEngine
-    UI -->|Solar Math Calculation| PrayerEngine
+    UI --> Firestore
+    Firestore --> UI
+    UI --> PDFEngine
+    UI --> PrayerEngine
 
-    UI -->|Direct CSV Stream Query| GSheet
-    UI -->|POST: Add / Edit / Toggle Bills| GAS
-    GAS -->|Row Insertion & Formatting| GSheet
+    UI --> GSheet
+    UI --> GAS
+    GAS --> GSheet
