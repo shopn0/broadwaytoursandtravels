@@ -46,34 +46,4 @@
 
 ## 🔄 System Flowchart & Data Architecture
 
-```mermaid
-graph TD
-    %% Nodes inside Frontend
-    subgraph Client ["Frontend: React & Vite"]
-        UI["Web Interface Dashboard"]
-        PrayerEngine["Dhaka Solar Calculation Engine"]
-        PDFEngine["Client-Side PDF Generator"]
-    end
-
-    %% Nodes inside Firebase
-    subgraph Firebase ["Firebase Cloud Platform"]
-        Auth["Firebase Authentication"]
-        Firestore[("Cloud Firestore DB")]
-    end
-
-    %% Nodes inside Google Workspace
-    subgraph GoogleSuite ["Google Workspace Integration"]
-        GAS["Google Apps Script API"]
-        GSheet[("Broadway-27 Master Google Sheet")]
-    end
-
-    %% Connections
-    UI --> Auth
-    UI --> Firestore
-    Firestore --> UI
-    UI --> PDFEngine
-    UI --> PrayerEngine
-
-    UI --> GSheet
-    UI --> GAS
-    GAS --> GSheet
+![Project Screenshot](https://i.ibb.co.com/Pv8q4GGF/New-Project-1.jpg)
